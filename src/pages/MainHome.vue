@@ -3,16 +3,29 @@
     <base-header></base-header>
     <section>
 <!--      <button @click="logout">Logout</button>-->
-      <button @click="checkMe">check me</button>
-      <br>
-      <br>
+<!--      <button @click="checkMe">check me</button>-->
+    </section>
+    <section>
+      <StoreCategory @category-selected="updateSelectedCategory"></StoreCategory>
+      <StoreList :selectedCategory="selectedCategory"></StoreList>
     </section>
   </div>
 </template>
 <script>
 import {apiRequest} from "@/utils/api";
+import StoreCategory from "@/components/store/StoreCategory.vue";
+import StoreList from "@/components/store/StoreList.vue";
 
 export default {
+  components: {
+    StoreList,
+    StoreCategory,
+  },
+  data() {
+    return {
+      selectedCategory: null,
+    };
+  },
   methods: {
     async checkMe() {
       try {
@@ -24,15 +37,16 @@ export default {
         console.error('Fail to get user information');
       }
     },
-    checkLogin() {
-      const accessToken = this.$store.getters.accessToken;
-      if (!accessToken) {
-        this.$router.push('/login');
-      }
-    },
+    updateSelectedCategory(category) {
+      console.log(category);
+      this.selectedCategory = category;
+    }
   },
   created() {
-    this.checkLogin();
+    const accessToken = this.$store.getters.accessToken;
+    if (!accessToken) {
+      this.$router.push('/login');
+    }
   },
 }
 </script>
