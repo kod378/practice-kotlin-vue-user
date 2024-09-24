@@ -2,10 +2,12 @@ import { createStore } from "vuex";
 import createPersistedState from "vuex-persistedstate";
 
 import authModule from "./auth/index.js";
+import storeMenuModule from "./storeMenu/index.js";
 
 const store = createStore({
     modules: {
         auth: authModule,
+        storeMenu: storeMenuModule,
     },
     state() {
         return {

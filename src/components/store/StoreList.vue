@@ -3,10 +3,10 @@
     <div class="store-list">
       <div v-if="isLoading">로딩 중...</div>
       <div v-else-if="storeList.length === 0">
-        <p>등록된 메뉴가 없습니다.</p>
+        <p>등록된 가게가 없습니다.</p>
       </div>
       <div v-else class="menu-grid">
-        <div v-for="store in storeList" :key="store.id" class="menu-item">
+        <div v-for="store in storeList" :key="store.id" class="menu-item" @click="selectedStore(store.id)">
           <img :src="store.thumbnailUrl" alt="Menu Image" class="menu-image" />
           <h3 class="menu-name">{{ store.name }}</h3>
           <p class="menu-price">최소결제금액:{{ formatPrice(store.minimumAmount) }} 원</p>
@@ -54,6 +54,9 @@ export default {
       } finally {
         this.isLoading = false;
       }
+    },
+    selectedStore(storeId) {
+      this.$router.push(`/store/${storeId}`);
     },
   },
 };

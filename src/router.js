@@ -2,6 +2,8 @@ import {createRouter, createWebHistory} from 'vue-router'
 import MainHome from "@/pages/MainHome.vue";
 import UserLogin from "@/pages/auth/UserLogin.vue";
 import UserRegister from "@/pages/auth/UserRegister.vue";
+import StoreInfo from "@/pages/store/StoreInfo.vue";
+import AddMenu from "@/pages/store/AddMenu.vue";
 
 const router = createRouter({
     history: createWebHistory(),
@@ -10,6 +12,8 @@ const router = createRouter({
         {path: '/', component: MainHome},
         {path: '/login', component: UserLogin, name: 'login'},
         {path: '/register', component: UserRegister},
+        {path: '/store/:storeId', component: StoreInfo},
+        {path: '/store-menu/add', component: AddMenu},
     ]
 });
 
