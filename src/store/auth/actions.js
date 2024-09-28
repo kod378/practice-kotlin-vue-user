@@ -35,6 +35,15 @@ export default {
             throw new Error(errorMessage);
         }
     },
+
+    async logout(context) {
+        context.commit('setUser', {
+            accessToken: null,
+            refreshToken: null,
+            username: null,
+        });
+        await context.dispatch('setIsLoggedIn', false);
+    },
 };
 
 function setUser(context, responseData) {

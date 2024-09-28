@@ -22,7 +22,16 @@ export default {
   data() {
     return {
       quantity: 1,
-      menu: {},
+      menu: {
+        id: 0,
+        name: '',
+        thumbnailUrl: '',
+        amount: 0,
+      },
+      store: {
+        id: 0,
+        name: '',
+      },
     };
   },
   methods: {
@@ -32,8 +41,33 @@ export default {
     decreaseQuantity() {
       if (this.quantity > 1) this.quantity--;
     },
-    addToCart() {
+    async addToCart() {
+      const currentAddedStore = this.$store.getters['shoppingCart/store'];
+      if (currentAddedStore && currentAddedStore.id !== this.store.id) {
+        const confirmation = confirm('다른 가게의 상품이 장바구니에 담겨 있습니다. 장바구니를 비우고 새로운 가게의 상품을 담으시겠습니까?');
+        if (!confirmation) {
+          return;
+        }
+        await this.$store.dispatch('shoppingCart/clearCart');
+      }
+
+      const shoppingCart = this.$store.getters['shoppingCart/shoppingCart'];
+      const isAlreadyAdded = shoppingCart.some((menu) => menu.id === this.menu.id);
+      if (isAlreadyAdded) {
+        const confirmation = confirm('이미 장바구니에 담긴 상품입니다. 수량을 변경하시겠습니까?');
+        if (!confirmation) {
+          return;
+        }
+        await this.$store.dispatch('shoppingCart/removeMenu', this.menu.id);
+      }
+
       // 선택된 수량과 함께 메뉴를 장바구니에 추가하는 로직
+      await this.$store.dispatch('shoppingCart/addMenu', {
+        menu: this.menu,
+        quantity: this.quantity,
+        store: this.store,
+      });
+      this.$router.go(-1); // 이전 페이지로 이동
     },
     cancel() {
       this.$router.go(-1); // 이전 페이지로 이동
@@ -41,7 +75,8 @@ export default {
   },
   created() {
     // vuex에서 메뉴 정보를 가져오는 로직
-    this.menu = this.$store.getters.storeMenu;
+    this.menu = this.$store.getters['storeMenu/storeMenu'];
+    this.store = this.$store.getters['storeMenu/store'];
   },
 }
 </script>

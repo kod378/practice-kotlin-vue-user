@@ -1,5 +1,4 @@
 <template>
-<!--  <img alt="Vue logo" src="@/assets/logo.png">-->
   <h1>USER PAGE</h1>
   <router-view></router-view>
 </template>

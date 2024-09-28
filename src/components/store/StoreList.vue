@@ -5,12 +5,12 @@
       <div v-else-if="storeList.length === 0">
         <p>등록된 가게가 없습니다.</p>
       </div>
-      <div v-else class="menu-grid">
-        <div v-for="store in storeList" :key="store.id" class="menu-item" @click="selectedStore(store.id)">
-          <img :src="store.thumbnailUrl" alt="Menu Image" class="menu-image" />
-          <h3 class="menu-name">{{ store.name }}</h3>
-          <p class="menu-price">최소결제금액:{{ formatPrice(store.minimumAmount) }} 원</p>
-          <p class="menu-price">최소배달비:{{ formatPrice(store.minimumDeliveryAmount) }} 원</p>
+      <div v-else class="store-grid">
+        <div v-for="store in storeList" :key="store.id" class="store-item" @click="selectedStore(store.id)">
+          <img :src="store.thumbnailUrl" alt="Store Image" class="store-image" />
+          <h3 class="store-name">{{ store.name }}</h3>
+          <p class="price">최소결제금액:{{ formatPrice(store.minimumAmount) }} 원</p>
+          <p class="price">최소배달비:{{ formatPrice(store.minimumDeliveryAmount) }} 원</p>
         </div>
       </div>
     </div>
@@ -69,13 +69,13 @@ export default {
   padding: 20px;
 }
 
-.menu-grid {
+.store-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 20px;
 }
 
-.menu-item {
+.store-item {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -85,20 +85,20 @@ export default {
   background-color: #f9f9f9;
 }
 
-.menu-image {
+.store-image {
   width: 100%;
   height: auto;
   max-width: 180px;
   margin-bottom: 10px;
 }
 
-.menu-name {
+.store-name {
   font-size: 18px;
   font-weight: bold;
   margin: 10px 0;
 }
 
-.menu-price {
+.price {
   font-size: 16px;
   color: #333;
 }

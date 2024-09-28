@@ -19,14 +19,20 @@ axiosInstance.interceptors.response.use(
         // 401 에러가 발생하고, 재시도 플래그가 없으며, 에러 응답이 2001일 때
         if (error.response.status === 401 && !originalRequest._retry && error.response.data.result.code === 2001) {
             originalRequest._retry = true;
-
-            // AccessToken이 만료되었을 때 로그인 화면으로 리디렉션하며 query에 이유 전달
-            await router.push({
-                name: 'login',
-                query: {message: 'token-expired'}
-            });
+            try {
+                await store.dispatch('logout');
+                // AccessToken이 만료되었을 때 로그인 화면으로 리디렉션하며 query에 이유 전달
+                await router.replace({
+                    name: 'login',
+                    query: {message: 'token-expired'}
+                });
+                return Promise.reject(error);
+            } catch (error) {
+                return Promise.reject(error);
+            }
+        } else {
+            return Promise.reject(error);
         }
-        return Promise.reject(error);
     }
 );
 

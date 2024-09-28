@@ -3,6 +3,7 @@ import actions from "@/store/storeMenu/actions";
 import getters from "@/store/storeMenu/getters";
 
 export default {
+    namespaced: true,
     state() {
         return {
             storeMenu: null,
@@ -11,5 +12,5 @@ export default {
     },
     mutations,
     actions,
-    getters
+    getters,
 }

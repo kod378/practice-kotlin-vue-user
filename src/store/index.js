@@ -3,11 +3,13 @@ import createPersistedState from "vuex-persistedstate";
 
 import authModule from "./auth/index.js";
 import storeMenuModule from "./storeMenu/index.js";
+import shoppingCartModule from "@/store/shoppingCart";
 
 const store = createStore({
     modules: {
         auth: authModule,
         storeMenu: storeMenuModule,
+        shoppingCart: shoppingCartModule,
     },
     state() {
         return {
@@ -30,7 +32,7 @@ const store = createStore({
         },
     },
     plugins: [createPersistedState({
-        paths: ["auth", 'isLoggedIn'],
+        paths: ["auth", 'isLoggedIn', 'shoppingCart'],
     })],
 });
 

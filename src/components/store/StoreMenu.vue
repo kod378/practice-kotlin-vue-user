@@ -35,8 +35,8 @@ export default {
     },
     selectedMenu(menuId) {
       const selectedMenu = this.storeMenus.find((menu) => menu.id === menuId);
-      this.$store.commit('setStore', {store: this.store});
-      this.$store.commit('setStoreMenu', {storeMenu: selectedMenu});
+      this.$store.dispatch('storeMenu/setStore', {store: this.store});
+      this.$store.dispatch('storeMenu/setStoreMenu', {storeMenu: selectedMenu});
       this.$router.push(`/store-menu/add`);
     },
   },

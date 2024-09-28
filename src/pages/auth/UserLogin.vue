@@ -70,7 +70,7 @@ export default {
       this.$router.push('/');
     }
     // URL query에서 "message" 파라미터 확인
-    if (this.$route.query.message === 'refresh-token-expired') {
+    if (this.$route.query.message === 'token-expired') {
       this.isTokenExpiredMessage = true;
     }
   }
