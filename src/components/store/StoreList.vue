@@ -6,8 +6,19 @@
         <p>등록된 가게가 없습니다.</p>
       </div>
       <div v-else class="store-grid">
-        <div v-for="store in storeList" :key="store.id" class="store-item" @click="selectedStore(store.id)">
-          <img :src="store.thumbnailUrl" alt="Store Image" class="store-image" />
+        <div
+            v-for="store in storeList"
+            :key="store.id"
+            class="store-item"
+            :class="{ 'non-open': store.status !== 'OPEN' }"
+            @click="store.status === 'OPEN' && selectedStore(store.id)"
+        >
+          <div class="store-image-wrapper">
+            <img :src="store.thumbnailUrl" alt="Store Image" class="store-image" />
+            <div v-if="store.status !== 'OPEN'" class="status-overlay">
+              <span>{{ getStatusText(store.status) }}</span>
+            </div>
+          </div>
           <h3 class="store-name">{{ store.name }}</h3>
           <p class="price">최소결제금액:{{ formatPrice(store.minimumAmount) }} 원</p>
           <p class="price">최소배달비:{{ formatPrice(store.minimumDeliveryAmount) }} 원</p>
@@ -41,6 +52,11 @@ export default {
   methods: {
     formatPrice(price) {
       return price.toLocaleString();
+    },
+    getStatusText(status) {
+      if (status === 'CLOSE') return '영업 종료';
+      if (status === 'REGISTED') return '준비중';
+      return '';
     },
     async getStoreList(category) {
       this.isLoading = true;
@@ -83,6 +99,15 @@ export default {
   padding: 15px;
   text-align: center;
   background-color: #f9f9f9;
+  position: relative;
+}
+
+.non-open {
+  pointer-events: none; /* Disable clicks for non-open stores */
+}
+
+.store-image-wrapper {
+  position: relative;
 }
 
 .store-image {
@@ -90,6 +115,21 @@ export default {
   height: auto;
   max-width: 180px;
   margin-bottom: 10px;
+}
+
+.non-open .store-image {
+  filter: blur(4px);
+}
+
+.status-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
 }
 
 .store-name {
