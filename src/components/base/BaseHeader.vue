@@ -1,10 +1,22 @@
 <template>
   <header class="header">
     <div class="header-content">
-      <div class="left-space"></div> <!-- Empty space on the left -->
+      <div class="left-space">
+        <!-- 주문기록 이동버튼 -->
+        <button class="order-history-button" @click="goOrderHistory">
+          주문기록
+        </button>
 
-      <div class="logo">
-        <img src="@/assets/logo.png" alt="Logo" />
+        <!-- 현재주문 이동버튼 -->
+        <button class="current-order-button" @click="goCurrentOrder">
+          현재주문
+        </button>
+      </div>
+
+      <div class="logo-container">
+        <div class="logo" @click="replaceToMain">
+          <img src="@/assets/logo.png" alt="Logo" />
+        </div>
       </div>
 
       <div class="right-section">
@@ -43,6 +55,15 @@ export default {
     goOrder() {
       this.$router.push('/order');
     },
+    replaceToMain() {
+      this.$router.replace('/');
+    },
+    goOrderHistory() {
+      this.$router.push('/order/history'); // 주문 기록 페이지로 이동
+    },
+    goCurrentOrder() {
+      this.$router.push('/order/current'); // 현재 주문 페이지로 이동
+    },
   },
 };
 </script>
@@ -65,13 +86,37 @@ export default {
 }
 
 .left-space {
-  flex: 1; /* This creates an empty space on the left */
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.order-history-button,
+.current-order-button {
+  margin-right: 10px;
+  padding: 8px 16px;
+  background-color: #ff6600;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.order-history-button:hover,
+.current-order-button:hover {
+  background-color: #e55d00;
+}
+
+.logo-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
 }
 
 .logo {
-  flex: 1;
   display: flex;
-  justify-content: center; /* Centers the logo */
+  justify-content: center;
+  align-items: center;
 }
 
 .logo img {
@@ -81,7 +126,7 @@ export default {
 .right-section {
   display: flex;
   align-items: center;
-  justify-content: flex-end; /* Aligns shopping cart and profile to the right */
+  justify-content: flex-end;
   flex: 1;
 }
 
@@ -89,7 +134,7 @@ export default {
   font-size: 18px;
   font-weight: bold;
   color: #ff6600;
-  margin-right: 20px; /* Space between the cart and profile */
+  margin-right: 20px;
 }
 
 .profile {

@@ -96,8 +96,7 @@ export default {
         await this.$store.dispatch('shoppingCart/clearCart');
         alert("구매 완료!");
 
-        //TODO: Redirect to the order history page
-
+        await this.$router.push('/order/current');
       }
     },
     goBack() {

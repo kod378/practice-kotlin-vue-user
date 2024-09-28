@@ -5,6 +5,8 @@ import UserRegister from "@/pages/auth/UserRegister.vue";
 import StoreInfo from "@/pages/store/StoreInfo.vue";
 import AddMenu from "@/pages/store/AddMenu.vue";
 import OrderInShoppingCart from "@/pages/order/OrderInShoppingCart.vue";
+import OrderHistory from "@/pages/order/OrderHistory.vue";
+import OrderCurrent from "@/pages/order/OrderCurrent.vue";
 
 const router = createRouter({
     history: createWebHistory(),
@@ -16,6 +18,8 @@ const router = createRouter({
         {path: '/store/:storeId', component: StoreInfo},
         {path: '/store-menu/add', component: AddMenu},
         {path: '/order', component: OrderInShoppingCart},
+        {path: '/order/history', component: OrderHistory},
+        {path: '/order/current', component: OrderCurrent},
     ]
 });
 

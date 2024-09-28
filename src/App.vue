@@ -1,5 +1,5 @@
 <template>
-  <h1>USER PAGE</h1>
+  <h1 @click="replaceMain">USER PAGE</h1>
   <router-view></router-view>
 </template>
 
@@ -7,6 +7,11 @@
 
 export default {
   name: 'App',
+  methods: {
+    replaceMain() {
+      this.$router.replace('/')
+    }
+  }
 }
 </script>
 
