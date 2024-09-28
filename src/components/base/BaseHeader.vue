@@ -11,6 +11,9 @@
         <div v-if="shoppingCartCount > 0" class="shopping-cart" @click="goOrder">
           🛒 {{ shoppingCartCount }}
         </div>
+        <div v-else class="shopping-cart">
+          🛒
+        </div>
         <div class="profile">
           <img class="profile-icon" :src="userProfile.iconUrl" alt="Profile Icon" />
           <span class="profile-name">{{ username }}</span>
