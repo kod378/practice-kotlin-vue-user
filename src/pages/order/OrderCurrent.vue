@@ -1,48 +1,51 @@
 <template>
-  <div class="order-history">
-    <!-- 주문 내역이 있을 때만 카드 출력 -->
-    <div v-if="orders.length > 0">
-      <div v-for="order in orders" :key="order.userOrderResponse.id" class="order-card">
-        <!-- 이미지와 가게 정보는 가로로 정렬 -->
-        <div class="store-info">
-          <!-- 가게 이미지 -->
-          <img :src="order.storeResponse.thumbnailUrl" alt="store image" class="store-thumbnail" />
+  <div>
+    <base-header></base-header>
+    <div class="order-history">
+      <!-- 주문 내역이 있을 때만 카드 출력 -->
+      <div v-if="orders.length > 0">
+        <div v-for="order in orders" :key="order.userOrderResponse.id" class="order-card">
+          <!-- 이미지와 가게 정보는 가로로 정렬 -->
+          <div class="store-info">
+            <!-- 가게 이미지 -->
+            <img :src="order.storeResponse.thumbnailUrl" alt="store image" class="store-thumbnail" />
 
-          <!-- 가게 이름과 주문 시간 (이미지 오른쪽에 출력) -->
-          <div class="store-details">
-            <h3>{{ order.storeResponse.name }}</h3>
-            <p>주문 시간: {{ formatDate(order.userOrderResponse.orderedAt) }}</p>
+            <!-- 가게 이름과 주문 시간 (이미지 오른쪽에 출력) -->
+            <div class="store-details">
+              <h3>{{ order.storeResponse.name }}</h3>
+              <p>주문 시간: {{ formatDate(order.userOrderResponse.orderedAt) }}</p>
+            </div>
           </div>
-        </div>
 
-        <!-- 진행 단계 표시 -->
-        <div class="order-progress">
-          <div class="progress-step" v-for="(step, index) in progressSteps" :key="index">
-            <div :class="{'progress-circle': true, 'completed': isStepCompleted(order.userOrderResponse, step)}"></div>
-            <p>{{ step.description }} <br> <small v-if="getStepTime(order.userOrderResponse, step)">{{ formatDate(getStepTime(order.userOrderResponse, step)) }}</small></p>
-            <div v-if="index < progressSteps.length - 1" :class="{'progress-line': true, 'completed': isStepCompleted(order.userOrderResponse, progressSteps[index + 1])}"></div>
+          <!-- 진행 단계 표시 -->
+          <div class="order-progress">
+            <div class="progress-step" v-for="(step, index) in progressSteps" :key="index">
+              <div :class="{'progress-circle': true, 'completed': isStepCompleted(order.userOrderResponse, step)}"></div>
+              <p>{{ step.description }} <br> <small v-if="getStepTime(order.userOrderResponse, step)">{{ formatDate(getStepTime(order.userOrderResponse, step)) }}</small></p>
+              <div v-if="index < progressSteps.length - 1" :class="{'progress-line': true, 'completed': isStepCompleted(order.userOrderResponse, progressSteps[index + 1])}"></div>
+            </div>
           </div>
-        </div>
 
-        <!-- 주문 메뉴 리스트 (이미지와 가게 정보 아래에 배치) -->
-        <div class="order-menu" @click="openModal(order)">
-          <p>{{ order.userOrderMenuResponseList[0].name }} 외 {{ order.userOrderMenuResponseList.length - 1 }}개</p>
-          <p>{{ order.userOrderResponse.amount }}원</p>
+          <!-- 주문 메뉴 리스트 (이미지와 가게 정보 아래에 배치) -->
+          <div class="order-menu" @click="openModal(order)">
+            <p>{{ simpleUserOrderMenuResponseList(order) }}</p>
+            <p>{{ order.userOrderResponse.amount }}원</p>
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- 주문 내역이 없을 때 출력할 메시지 -->
-    <div v-else class="no-orders">
-      <p>현재 진행 중인 주문이 없습니다.</p>
-    </div>
+      <!-- 주문 내역이 없을 때 출력할 메시지 -->
+      <div v-else class="no-orders">
+        <p>현재 진행 중인 주문이 없습니다.</p>
+      </div>
 
-    <!-- 모달 창 컴포넌트 -->
-    <OrderDetailModal
-        v-if="selectedOrder"
-        :order="selectedOrder"
-        @close="selectedOrder = null"
-    />
+      <!-- 모달 창 컴포넌트 -->
+      <OrderDetailModal
+          v-if="selectedOrder"
+          :order="selectedOrder"
+          @close="selectedOrder = null"
+      />
+    </div>
   </div>
 </template>
 
@@ -98,6 +101,13 @@ export default {
         'RECEIVE': 'receivedAt'
       };
       return orderResponse[statusToFieldMap[step.status]];
+    },
+    simpleUserOrderMenuResponseList(order) {
+      if (order.userOrderMenuResponseList.length > 1) {
+        return `${order.userOrderMenuResponseList[0].name} 외 ${order.userOrderMenuResponseList.length - 1}개`;
+      } else {
+        return order.userOrderMenuResponseList[0].name;
+      }
     }
   },
   created() {
