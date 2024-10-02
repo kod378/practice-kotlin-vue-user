@@ -118,7 +118,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .order-history {
   display: flex;
   flex-direction: column;
