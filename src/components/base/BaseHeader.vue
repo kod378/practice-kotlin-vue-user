@@ -15,7 +15,8 @@
 
       <div class="logo-container">
         <div class="logo" @click="replaceToMain">
-          <img src="@/assets/logo.png" alt="Logo" />
+<!--          <img src="@/assets/logo.png" alt="Logo" />-->
+          <button>메인으로</button>
         </div>
       </div>
 

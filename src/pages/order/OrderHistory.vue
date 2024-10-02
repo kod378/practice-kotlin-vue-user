@@ -12,6 +12,7 @@
           <div class="store-details">
             <h3>{{ order.storeResponse.name }}</h3>
             <p>주문 시간: {{ formatDate(order.userOrderResponse.orderedAt) }}</p>
+            <p>상태 : {{ getStatus(order.userOrderResponse.status) }}</p>
           </div>
         </div>
 
@@ -61,6 +62,16 @@ export default {
       const response = await apiRequest(`/api/user-order/history`);
       console.log(response);
       this.orders = response.data.body;
+    },
+    getStatus(status) {
+      switch (status) {
+        case 'RECEIVED':
+          return '완료';
+        case 'CANCEL':
+          return '취소';
+        default:
+          return '알 수 없음';
+      }
     }
   },
   created() {
