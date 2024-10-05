@@ -1,24 +1,11 @@
-# vue-first-app
+# 🛒 User 서버 프론트엔드
 
-## Project setup
-```
-npm install
-```
+이 프로젝트는 User 서버의 프론트엔드를 Vue.js로 구현한 것입니다. 주요 기능은 다음과 같습니다.
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+## 기능 및 시나리오
 
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+1. **로그인/회원가입**: 사용자 인증 및 계정 관리.
+2. **카테고리로 Store 검색**: 카테고리별로 Store를 검색하고 선택.
+3. **장바구니**: 선택한 Store의 메뉴를 장바구니에 담기.
+4. **주문**: 장바구니에 담긴 메뉴로 주문 생성.
+5. **주문 내역**: 과거 주문 및 현재 진행 중인 주문 확인.
